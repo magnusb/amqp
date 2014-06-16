@@ -569,12 +569,12 @@ rabbitCRdemo loginName loginPassword = SASLMechanism "RABBIT-CR-DEMO" initialRes
 -- the value 0 means unlimited.
 --
 -- NOTE: RabbitMQ does not implement prefetchSize and will throw an exception if it doesn't equal 0.
-qos :: Channel -> Word32 -> Word16 -> IO ()
-qos chan prefetchSize prefetchCount = do
+qos :: Channel -> Bool -> Word32 -> Word16 -> IO ()
+qos chan global prefetchSize prefetchCount = do
     (SimpleMethod Basic_qos_ok) <- request chan (SimpleMethod (Basic_qos
         prefetchSize
         prefetchCount
-        False
+        global
         ))
     return ()
 
